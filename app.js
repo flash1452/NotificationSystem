@@ -176,8 +176,10 @@ app.post('/getsubscribedUsers',function(req, res) {
 
             var subscriberlist = result[0].subscribedto.split("&");
             res.send(subscriberlist);
+          } else {
+
+            res.send([]);
           }
-          res.send([]);
         });
     } else {
         res.render('error', { title: 'Error Message' , message: 'You need to login first.'});
