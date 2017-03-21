@@ -93,6 +93,7 @@ $(document).ready(function(){
 	  var clientid = parsed_data.clientid;
 	  console.log(msg);
 	  $('<li>' + msg + '</li>').appendTo("#notifications");
+	  alert("You have received new notification");
 
 	};
 
@@ -111,6 +112,10 @@ $(document).ready(function(){
 	        	var ret = jQuery.parseJSON(response);
 	        	for(var index in ret) {
 	        		$('<li>' + ret[index].msg + '</li>').appendTo("#notifications");
+	        	}
+	        	if(ret.length>0) {
+
+	        		alert("You have received new notification");
 	        	}
 	        }
 		});
