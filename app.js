@@ -143,7 +143,10 @@ app.get('/getUsers', function (req, res) {
         connection.query("SELECT userid , username FROM users", function (err, result) {
             var userdetail = [];
            for (index in result) {
+              if (result[index].userid != USERID) {
+
                 userdetail.push({userid:result[index].userid, username:result[index].username});
+              }
            }
            userdetail.push({userid:USERID, username:""});
            mapUserDetail(userdetail);
@@ -169,8 +172,12 @@ app.post('/getsubscribedUsers',function(req, res) {
     // console.log(access);
     if(access) {
         connection.query("SELECT subscribedto FROM submapping WHERE subscribedby = ?",[USERID] ,function (err, result) {
+           if(result.length > 0) {
+
             var subscriberlist = result[0].subscribedto.split("&");
             res.send(subscriberlist);
+          }
+          res.send([]);
         });
     } else {
         res.render('error', { title: 'Error Message' , message: 'You need to login first.'});
@@ -207,7 +214,7 @@ app.post('/submitsubscription',function(req,res){
                             connection.query("SELECT subscribedby, subscribedto FROM submapping", function(err, result) {
                                 for(var index=0;index<result.length;index++) {
                                     var substo = result[index].subscribedto.split("&");
-                                    if(substo.indexOf(userid.toString()) > -1 ) {
+                                    if(substo.indexOf(USERID.toString()) > -1 ) {
                                         subscriberlist.push(result[index].subscribedby);
                                     }
                                 }
