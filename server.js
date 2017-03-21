@@ -17,17 +17,17 @@ socket.on("connect", function ( client ) {
 
 socket.on('request', function(request) {
     var sockconnection = request.accept(null, request.origin);
-    console.log("client connected");
+    // console.log("client connected");
     n = n + 1;
     client_no.push(n);
 
     sockconnection.on('message', function(message) {
          var msg = JSON.parse(message.utf8Data);
-         console.log(msg);
+         // console.log(msg);
         if(msg.hasOwnProperty('userid')){
             clientconn_obj.push(sockconnection);
     		clientid_list.push(msg.userid);
-    		console.log(clientid_list);
+    		// console.log(clientid_list);
 
         } else {
             if(msg.hasOwnProperty('subscribers')) {
@@ -47,7 +47,7 @@ socket.on('request', function(request) {
         for (var i in clientconn_obj) {
             //console.log("hello");
               if(clientconn_obj[i] == sockconnection){
-                console.log("it is present");
+                // console.log("it is present");
                 clientconn_obj.splice(i, 1);
                 clientconn_list.splice(i,1);
                 clientid_list.splice(i,1);

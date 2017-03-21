@@ -8,14 +8,14 @@ $(document).ready(function(){
 		        url: "/getsubscribedUsers",
 		        async: false,
 		        success: function(response) {
-		        	console.log(response);
+		        	// console.log(response);
 					$.get( "/getUsers", function( data ) {
-						console.log(data);
+						// console.log(data);
 						var ret = jQuery.parseJSON(data);
 						$("#loginid").text(ret[ret.length-1].userid.toString());
-						console.log("userid:" + ret[ret.length-1].userid.toString());
+						// console.log("userid:" + ret[ret.length-1].userid.toString());
 						try{ws.send(JSON.stringify({userid: ret[ret.length-1].userid.toString()}));}catch(err){
-					      console.log(err.message);
+					      // console.log(err.message);
 					    }
 						$('<input />', {
 						        type : 'hidden',
@@ -27,7 +27,7 @@ $(document).ready(function(){
 							// console.log(response);
 							// console.log(ret[i].userid.toString());
 							if(response.indexOf(ret[i].userid.toString()) > -1) {
-								console.log("userid found");
+								// console.log("userid found");
 							    $('<input />', {
 							        type : 'checkbox',
 							        id: '' + ret[i].userid,
@@ -50,7 +50,7 @@ $(document).ready(function(){
 					        text: "Submit Subscription", //set text 1 to 10
 					        id: 'submit',
 					        click: function () {
-					        	console.log("clicked");
+					        	// console.log("clicked");
 					        	var userstring = '';
 					        	var subarray = [];
 					        	$("#container input[type=checkbox]").each(function() {
@@ -61,16 +61,16 @@ $(document).ready(function(){
 								    }
 								});
 								userstring = subarray.join("&");
-								console.log(userstring);
+								// console.log(userstring);
 								$.ajax({
 							        type: "POST",
 							        url: "/submitsubscription",
 							        data: {userstring: userstring},
 							        async: false,
 							        success: function(response) {
-							       		console.log(response);
+							       		// console.log(response);
 							       		var ret = jQuery.parseJSON(response);
-							       		console.log(response);
+							       		// console.log(response);
 							       		if(ret.change == 1) {
 
 							       			ws.send(JSON.stringify({loginid: ret.userid, subscribers: ret.subid, loginname: ret.username}));
